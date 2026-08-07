@@ -73,7 +73,7 @@ export default function TemplateDemoCTA() {
 
                 <div className="mt-5 grid gap-2.5">
                   <a
-                    href="https://axistudio.studio/contact"
+                    href="https://axistudio.studio/contact?template=fitness"
                     className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lime-400 px-5 text-sm font-black text-black transition duration-200 hover:-translate-y-0.5 hover:bg-lime-300"
                   >
                     Start With This Design
