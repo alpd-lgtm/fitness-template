@@ -7,6 +7,7 @@ import { FadeUp, ScaleIn } from "@/components/Motion";
 import { motion, AnimatePresence } from "framer-motion";
 import Counter from "@/components/Counter";
 import ParallaxImage from "@/components/ParallaxImage";
+import TemplateDemoCTA from "@/components/TemplateDemoCTA";
 
 
 import {
@@ -611,7 +612,7 @@ activePlan === name || popular
   setOpen={setOpen}
   selectedPlan={selectedPlan}
 />
-
+<TemplateDemoCTA />
       <Footer />
     </>
   );
