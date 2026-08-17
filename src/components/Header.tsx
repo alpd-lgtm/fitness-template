@@ -1,15 +1,25 @@
 "use client";
 
 import { Menu, X, Zap } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navItems = [
-  "Home",
-  "Programs",
-  "Coaches",
-  "Nutrition",
-  "Pricing",
-  "Blog",
+  {
+    label: "Home",
+    href: "#top",
+  },
+  {
+    label: "Programs",
+    href: "#programs",
+  },
+  {
+    label: "Results",
+    href: "#results",
+  },
+  {
+    label: "Memberships",
+    href: "#pricing",
+  },
 ];
 
 export default function Header({
@@ -19,133 +29,186 @@ export default function Header({
 }) {
   const [open, setOpen] = useState(false);
 
+  /* =====================================================
+     LOCK BODY WHEN MOBILE MENU IS OPEN
+  ===================================================== */
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [open]);
+
+  /* =====================================================
+     SMOOTH SCROLL
+  ===================================================== */
+
+  function handleNavigation(href: string) {
+    setOpen(false);
+
+    if (href === "#top") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      return;
+    }
+
+    const section = document.querySelector(href);
+
+    section?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-black/[0.06] bg-[#f7f8f5]">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {/* LEFT */}
-        <div className="flex min-w-0 items-center gap-3">
-          {/* LOGO */}
-          <a
-            href="#"
-            className="flex shrink-0 items-center gap-2 text-xl font-black tracking-tight text-black sm:text-2xl"
+    <>
+      <header className="sticky top-0 z-50 w-full border-b border-black/[0.06] bg-[#f7f8f5]/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* =================================================
+              LOGO
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() => handleNavigation("#top")}
+            aria-label="VitalFit home"
+            className="group flex shrink-0 items-center gap-2.5"
           >
-            <span className="grid size-9 place-items-center rounded-xl bg-lime-500 text-black">
-              <Zap size={19} fill="currentColor" />
+            <span className="grid size-10 place-items-center rounded-[13px] bg-lime-500 text-black shadow-sm shadow-lime-500/20 transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
+              <Zap
+                size={19}
+                strokeWidth={2.6}
+                fill="currentColor"
+              />
             </span>
 
-            <span>VitalFit</span>
-          </a>
-
-          {/* DEMO BADGE */}
-          <a
-            href="https://axistudio.studio/templates"
-            className="group inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#6C63FF]/15 bg-[#6C63FF]/[0.06] px-2 py-1 transition hover:border-[#6C63FF]/30 hover:bg-[#6C63FF]/10 sm:px-2.5"
-            title="This is an Axis Studio demo website"
-          >
-            <span className="size-1.5 rounded-full bg-[#6C63FF]" />
-
-            <span className="text-[8px] font-black uppercase tracking-[0.12em] text-[#5B52F5] sm:hidden">
-              Demo
+            <span className="text-[1.35rem] font-black tracking-[-0.04em] text-[#101510] sm:text-2xl">
+              Vital
+              <span className="text-lime-600">Fit</span>
             </span>
+          </button>
 
-            <span className="hidden text-[9px] font-black uppercase tracking-[0.12em] text-[#5B52F5] sm:inline">
-              Axis Studio Demo
-            </span>
-          </a>
-        </div>
+          {/* =================================================
+              DESKTOP NAVIGATION
+          ================================================= */}
 
-        {/* DESKTOP NAV */}
-        <nav className="hidden items-center gap-7 lg:flex">
-          {navItems.map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="relative text-sm font-bold text-gray-700 transition hover:text-black"
-            >
-              {item}
-
-              {item === "Home" && (
-                <span className="absolute -bottom-3 left-0 h-1 w-full rounded-full bg-lime-500" />
-              )}
-            </a>
-          ))}
-        </nav>
-
-        {/* DESKTOP CTA */}
-        <button
-          type="button"
-          onClick={() => onBook("Free Consultation")}
-          className="hidden min-h-11 items-center justify-center rounded-xl bg-black px-5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-neutral-800 lg:inline-flex"
-        >
-          Get Started
-          <span className="ml-2">→</span>
-        </button>
-
-        {/* MOBILE MENU BUTTON */}
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((previous) => !previous)}
-          className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-black transition active:scale-95 lg:hidden"
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </div>
-
-      {/* MOBILE MENU */}
-      {open && (
-        <div className="border-t border-black/[0.06] bg-[#f7f8f5] px-4 pb-5 pt-4 sm:px-6 lg:hidden">
-          <div className="mx-auto max-w-7xl">
-            <nav className="grid gap-2 sm:grid-cols-2">
-              {navItems.map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl border border-black/[0.05] bg-white px-4 py-3 text-sm font-black text-gray-800 shadow-sm transition active:scale-[0.99]"
-                >
-                  {item}
-                </a>
-              ))}
-            </nav>
-
-            <button
-              type="button"
-              onClick={() => {
-                onBook("Free Consultation");
-                setOpen(false);
-              }}
-              className="mt-3 w-full rounded-xl bg-lime-500 py-3.5 text-sm font-black text-black transition hover:bg-lime-400"
-            >
-              Get Started →
-            </button>
-
-            {/* AXIS STUDIO DEMO NOTICE */}
-            <div className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-[#6C63FF]/15 bg-[#6C63FF]/[0.05] px-3.5 py-3">
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="size-1.5 shrink-0 rounded-full bg-[#6C63FF]" />
-
-                  <p className="text-[9px] font-black uppercase tracking-[0.13em] text-[#5B52F5]">
-                    Axis Studio Demo
-                  </p>
-                </div>
-
-                <p className="mt-1 text-[10px] leading-4 text-gray-500">
-                  This is a sample website created for demonstration.
-                </p>
-              </div>
-
-              <a
-                href="https://axistudio.studio/templates"
-                className="shrink-0 rounded-lg border border-[#6C63FF]/15 bg-white px-3 py-2 text-[9px] font-black text-[#5B52F5]"
+          <nav className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => handleNavigation(item.href)}
+                className="group relative rounded-xl px-4 py-2.5 text-sm font-bold text-gray-600 transition hover:bg-white hover:text-[#101510]"
               >
-                Designs →
-              </a>
+                {item.label}
+
+                <span className="absolute bottom-1.5 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-lime-500 transition-all duration-300 group-hover:w-5" />
+              </button>
+            ))}
+          </nav>
+
+          {/* =================================================
+              DESKTOP CTA
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() => onBook("Free Consultation")}
+            className="group hidden min-h-11 items-center justify-center rounded-xl bg-[#101510] px-5 text-sm font-black text-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg lg:inline-flex"
+          >
+            Get Started
+
+            <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+          </button>
+
+          {/* =================================================
+              MOBILE MENU BUTTON
+          ================================================= */}
+
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((previous) => !previous)}
+            className="grid size-11 shrink-0 place-items-center rounded-xl border border-black/[0.07] bg-white text-[#101510] shadow-sm transition active:scale-95 lg:hidden"
+          >
+            {open ? (
+              <X size={21} strokeWidth={2.2} />
+            ) : (
+              <Menu size={21} strokeWidth={2.2} />
+            )}
+          </button>
+        </div>
+      </header>
+
+      {/* =====================================================
+          MOBILE MENU
+      ====================================================== */}
+
+      {open && (
+        <div className="fixed inset-0 top-[72px] z-40 bg-[#101510]/35 backdrop-blur-sm lg:hidden">
+          <div className="border-b border-black/[0.06] bg-[#f7f8f5] px-4 pb-6 pt-4 shadow-2xl sm:px-6">
+            <div className="mx-auto max-w-7xl">
+              {/* NAVIGATION */}
+              <nav className="grid gap-2">
+                {navItems.map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() =>
+                      handleNavigation(item.href)
+                    }
+                    className="group flex min-h-13 w-full items-center justify-between rounded-[14px] border border-black/[0.055] bg-white px-4 py-3.5 text-left text-sm font-black text-[#101510] shadow-sm transition active:scale-[0.99]"
+                  >
+                    {item.label}
+
+                    <span className="text-gray-300 transition group-hover:translate-x-1 group-hover:text-lime-600">
+                      →
+                    </span>
+                  </button>
+                ))}
+              </nav>
+
+              {/* MOBILE CTA */}
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  onBook("Free Consultation");
+                }}
+                className="mt-4 inline-flex min-h-13 w-full items-center justify-center rounded-[14px] bg-lime-500 px-5 py-3.5 text-sm font-black text-black shadow-lg shadow-lime-500/15 transition hover:bg-lime-400 active:scale-[0.99]"
+              >
+                Get Started
+                <span className="ml-2">→</span>
+              </button>
+
+              {/* SMALL SUPPORTING LINE */}
+              <p className="mt-4 text-center text-[10px] font-semibold text-gray-400">
+                Personal training · Fitness programs · Coaching
+              </p>
             </div>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
