@@ -1627,7 +1627,13 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
+      <Footer
+  onBook={(plan) => {
+    setSelectedPlan(plan);
+    setActivePlan(null);
+    setOpen(true);
+  }}
+/>
 
       {/* FITNESS BUSINESS MODAL */}
       <BookingModal
