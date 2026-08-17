@@ -958,7 +958,7 @@ export default function Home() {
           className="mx-auto max-w-7xl scroll-mt-24 px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24"
         >
           <FadeUp>
-            <div className="mb-7 flex flex-col justify-between gap-5 sm:mb-9 md:flex-row md:items-end lg:mb-10">
+            <div className="mb-7 flex flex-col gap-5 sm:mb-9 md:flex-row md:items-end md:justify-between md:gap-8 lg:mb-10">
               <div>
                 <p className="text-xs font-black uppercase tracking-wide text-lime-600 sm:text-sm">
                   Our Programs
@@ -974,15 +974,13 @@ export default function Home() {
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={() =>
-                  scrollToSection("pricing")
-                }
-                className="w-fit rounded-xl border border-gray-300 bg-white px-5 py-3 text-xs font-black transition hover:-translate-y-0.5 hover:shadow-lg sm:rounded-2xl sm:px-6 sm:text-sm"
-              >
-                View Memberships →
-              </button>
+<button
+  type="button"
+  onClick={() => scrollToSection("pricing")}
+  className="w-fit shrink-0 rounded-xl border border-gray-300 bg-white px-5 py-3 text-xs font-black transition hover:-translate-y-0.5 hover:shadow-lg sm:rounded-2xl sm:px-6 sm:text-sm md:mb-1"
+>
+  View Memberships →
+</button>
             </div>
           </FadeUp>
 
