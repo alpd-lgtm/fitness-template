@@ -765,54 +765,6 @@ export default function Home() {
         }}
       />
 
-      {/* =====================================================
-          AXIS STUDIO DEMO STRIP
-      ====================================================== */}
-
-      <div className="border-b border-lime-200/70 bg-[#f5f9ee]">
-        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
-          {/* MOBILE */}
-          <div className="flex items-center justify-between gap-2 sm:hidden">
-            <span className="shrink-0 rounded-full bg-[#101510] px-2.5 py-1 text-[7px] font-bold uppercase tracking-[0.14em] text-white">
-              Axis Studio Demo
-            </span>
-
-            <button
-              type="button"
-              onClick={() =>
-                setTemplateModalOpen(true)
-              }
-              className="inline-flex min-h-8 items-center justify-center rounded-lg border border-lime-500/25 bg-white px-3 text-[8px] font-bold text-lime-700 shadow-sm transition active:scale-[0.98]"
-            >
-              Start With This Design →
-            </button>
-          </div>
-
-          {/* TABLET / DESKTOP */}
-          <div className="hidden min-h-9 items-center justify-between gap-5 sm:flex">
-            <div className="flex min-w-0 items-center gap-3">
-              <span className="shrink-0 rounded-full bg-[#101510] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-white">
-                Axis Studio Demo
-              </span>
-
-              <p className="truncate text-xs font-medium text-gray-500">
-                Sample website content for design preview
-                only.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() =>
-                setTemplateModalOpen(true)
-              }
-              className="shrink-0 rounded-lg border border-lime-500/25 bg-white px-4 py-2 text-xs font-semibold text-lime-700 transition hover:bg-lime-50"
-            >
-              Start With This Design →
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* =====================================================
           FITNESS WEBSITE
